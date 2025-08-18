@@ -1,6 +1,7 @@
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Clock, User, Target, ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const modules = [
   {
@@ -81,10 +82,19 @@ const AuthoringModules = () => {
                   </div>
                 </div>
                 
-                <Button className="w-full bg-primary hover:bg-primary-dark text-primary-foreground">
-                  Start Module
-                  <ArrowRight className="ml-2 w-4 h-4" />
-                </Button>
+                {module.title === "Past Authoring" ? (
+                  <Link to="/past-authoring">
+                    <Button className="w-full bg-primary hover:bg-primary-dark text-primary-foreground">
+                      Start Module
+                      <ArrowRight className="ml-2 w-4 h-4" />
+                    </Button>
+                  </Link>
+                ) : (
+                  <Button className="w-full bg-primary hover:bg-primary-dark text-primary-foreground">
+                    Start Module
+                    <ArrowRight className="ml-2 w-4 h-4" />
+                  </Button>
+                )}
               </Card>
             );
           })}
