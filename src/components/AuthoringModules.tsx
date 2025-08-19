@@ -89,6 +89,20 @@ const AuthoringModules = () => {
                       <ArrowRight className="ml-2 w-4 h-4" />
                     </Button>
                   </Link>
+                ) : module.title === "Present Authoring" ? (
+                  <Link to="/present-authoring">
+                    <Button className="w-full bg-primary hover:bg-primary-dark text-primary-foreground">
+                      Start Module
+                      <ArrowRight className="ml-2 w-4 h-4" />
+                    </Button>
+                  </Link>
+                ) : module.title === "Future Authoring" ? (
+                  <Link to="/future-authoring">
+                    <Button className="w-full bg-primary hover:bg-primary-dark text-primary-foreground">
+                      Start Module
+                      <ArrowRight className="ml-2 w-4 h-4" />
+                    </Button>
+                  </Link>
                 ) : (
                   <Button className="w-full bg-primary hover:bg-primary-dark text-primary-foreground">
                     Start Module

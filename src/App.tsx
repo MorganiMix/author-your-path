@@ -6,6 +6,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import PastAuthoring from "./pages/PastAuthoring";
+import PresentAuthoring from "./pages/PresentAuthoring";
+import FutureAuthoring from "./pages/FutureAuthoring";
 
 const queryClient = new QueryClient();
 
@@ -18,6 +20,8 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/past-authoring" element={<PastAuthoring />} />
+          <Route path="/present-authoring" element={<PresentAuthoring />} />
+          <Route path="/future-authoring" element={<FutureAuthoring />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
