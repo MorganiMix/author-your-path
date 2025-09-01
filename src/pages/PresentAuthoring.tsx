@@ -4,7 +4,6 @@ import { Card } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import { ArrowLeft, Loader2 } from "lucide-react";
 import { Link } from "react-router-dom";
-import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 
 const PresentAuthoring = () => {
@@ -12,66 +11,25 @@ const PresentAuthoring = () => {
   const [isSaving, setIsSaving] = useState(false);
   const { toast } = useToast();
 
-  const loadProgress = async () => {
+  const loadProgress = () => {
     try {
-      const { data, error } = await supabase
-        .from('authoring_progress')
-        .select('content')
-        .eq('module_type', 'present')
-        .single();
-
-      if (error && error.code !== 'PGRST116') {
-        console.error('Error loading progress:', error);
-        return;
-      }
-
-      if (data?.content) {
-        setContent(data.content);
+      const savedContent = localStorage.getItem('presentAuthoring');
+      if (savedContent) {
+        setContent(savedContent);
       }
     } catch (error) {
       console.error('Error loading progress:', error);
     }
   };
 
-  const saveProgress = async () => {
+  const saveProgress = () => {
     setIsSaving(true);
     try {
-      const { data: existingData, error: fetchError } = await supabase
-        .from('authoring_progress')
-        .select('id')
-        .eq('module_type', 'present')
-        .single();
-
-      if (fetchError && fetchError.code !== 'PGRST116') {
-        console.error('Error fetching existing data:', fetchError);
-        setIsSaving(false);
-        return;
-      }
-
-      if (existingData) {
-        const { error } = await supabase
-          .from('authoring_progress')
-          .update({ 
-            content,
-            updated_at: new Date().toISOString()
-          })
-          .eq('id', existingData.id);
-
-        if (error) throw error;
-      } else {
-        const { error } = await supabase
-          .from('authoring_progress')
-          .insert({
-            module_type: 'present',
-            content
-          });
-
-        if (error) throw error;
-      }
+      localStorage.setItem('presentAuthoring', content);
 
       toast({
         title: "Progress saved",
-        description: "Your present authoring work has been saved successfully.",
+        description: "Your present authoring work has been saved to this device.",
       });
     } catch (error) {
       console.error('Error saving progress:', error);
