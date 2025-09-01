@@ -28,10 +28,13 @@ const PastAuthoring = () => {
   };
 
   const saveProgress = () => {
+    console.log('Save progress called, content length:', content.length);
     setIsLoading(true);
     
     try {
+      console.log('Attempting to save to localStorage...');
       localStorage.setItem('pastAuthoring', content);
+      console.log('Successfully saved to localStorage');
       
       toast({
         title: "Progress Saved",
@@ -39,6 +42,8 @@ const PastAuthoring = () => {
       });
     } catch (error) {
       console.error('Error saving progress:', error);
+      console.error('localStorage available:', typeof Storage !== 'undefined');
+      console.error('localStorage object:', localStorage);
       toast({
         title: "Save Failed",
         description: "There was an error saving your progress. Please try again.",
