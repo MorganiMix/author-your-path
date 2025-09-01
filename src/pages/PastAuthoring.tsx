@@ -4,11 +4,13 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
 import { ArrowLeft, Save } from "lucide-react";
 import { Link } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 
 const PastAuthoring = () => {
   const [content, setContent] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [progressId, setProgressId] = useState<string | null>(null);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -16,26 +18,58 @@ const PastAuthoring = () => {
     loadProgress();
   }, []);
 
-  const loadProgress = () => {
+  const loadProgress = async () => {
     try {
-      const savedContent = localStorage.getItem('pastAuthoring');
-      if (savedContent) {
-        setContent(savedContent);
+      const { data, error } = await supabase
+        .from('authoring_progress')
+        .select('*')
+        .eq('module_type', 'past')
+        .maybeSingle();
+
+      if (error) throw error;
+
+      if (data) {
+        setContent(data.content || "");
+        setProgressId(data.id);
       }
     } catch (error) {
       console.error('Error loading progress:', error);
     }
   };
 
-  const saveProgress = () => {
+  const saveProgress = async () => {
     setIsLoading(true);
     
     try {
-      localStorage.setItem('pastAuthoring', content);
-      
+      if (progressId) {
+        // Update existing progress
+        const { error } = await supabase
+          .from('authoring_progress')
+          .update({ content })
+          .eq('id', progressId);
+
+        if (error) throw error;
+      } else {
+        // Create new progress
+        const { data, error } = await supabase
+          .from('authoring_progress')
+          .insert([
+            {
+              module_type: 'past',
+              content,
+              session_data: {}
+            }
+          ])
+          .select()
+          .single();
+
+        if (error) throw error;
+        setProgressId(data.id);
+      }
+
       toast({
         title: "Progress Saved",
-        description: "Your writing has been saved to this device.",
+        description: "Your writing has been saved successfully.",
       });
     } catch (error) {
       console.error('Error saving progress:', error);
