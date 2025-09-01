@@ -22,7 +22,7 @@ export type Database = {
           module_type: string
           session_data: Json
           updated_at: string
-          user_id: string
+          user_id: string | null
         }
         Insert: {
           content?: string | null
@@ -31,7 +31,7 @@ export type Database = {
           module_type: string
           session_data?: Json
           updated_at?: string
-          user_id: string
+          user_id?: string | null
         }
         Update: {
           content?: string | null
@@ -40,7 +40,7 @@ export type Database = {
           module_type?: string
           session_data?: Json
           updated_at?: string
-          user_id?: string
+          user_id?: string | null
         }
         Relationships: []
       }
