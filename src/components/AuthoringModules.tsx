@@ -32,7 +32,7 @@ const modules = [
 
 const AuthoringModules = () => {
   return (
-    <section className="py-20 px-4 bg-gradient-subtle">
+    <section id="modules" className="py-20 px-4 bg-gradient-subtle">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">

@@ -22,11 +22,20 @@ const Hero = () => {
         </p>
         
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
-          <Button size="lg" className="bg-gradient-to-r from-primary to-primary-light hover:from-primary-dark hover:to-primary text-primary-foreground px-8 py-3 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300">
+          <Button 
+            size="lg" 
+            className="bg-gradient-to-r from-primary to-primary-light hover:from-primary-dark hover:to-primary text-primary-foreground px-8 py-3 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300"
+            onClick={() => document.getElementById('modules')?.scrollIntoView({ behavior: 'smooth' })}
+          >
             Start Your Journey
             <ArrowRight className="ml-2 w-5 h-5" />
           </Button>
-          <Button variant="outline" size="lg" className="border-primary text-primary hover:bg-primary/5 px-8 py-3 rounded-lg">
+          <Button 
+            variant="outline" 
+            size="lg" 
+            className="border-primary text-primary hover:bg-primary/5 px-8 py-3 rounded-lg"
+            onClick={() => document.getElementById('benefits')?.scrollIntoView({ behavior: 'smooth' })}
+          >
             Learn More
           </Button>
         </div>
