@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  author-your-path:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8082:80"
+    container_name: author-your-path-app
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
